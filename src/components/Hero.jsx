@@ -134,7 +134,7 @@ export default function Hero({ products, onAdd, onView, notify, onSelectCat }) {
           <br />
           &{' '}
           <em
-            className={`inline-block not-italic font-display italic text-accent font-normal transition-all duration-300 min-w-[4ch] ${
+            className={`inline-block font-display italic text-accent font-normal transition-all duration-300 min-w-[4ch] ${
               swap ? 'opacity-0 translate-y-2.5' : ''
             }`}
           >
