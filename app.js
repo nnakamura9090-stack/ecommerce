@@ -326,7 +326,7 @@ function renderCheckout(){
 }
 
 /* ---------- admin ---------- */
-$('adminBtn').onclick=()=>{ renderAdminList(); show('adminModal') };
+if($('footAdmin')) $('footAdmin').onclick=e=>{ e.preventDefault(); renderAdminList(); show('adminModal') };
 $('adminForm').onsubmit=e=>{
   e.preventDefault();
   const id = $('fId').value || 'u'+Date.now();
