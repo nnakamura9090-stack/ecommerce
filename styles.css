@@ -177,11 +177,15 @@ input[type=range]{width:100%;accent-color:#c96f2e}
 .only-mobile{display:block!important}
 button.only-mobile{display:inline-block!important}
 nav.only-mobile{display:flex!important}
-.search-wrap{display:none}.mobile-search{display:block}
-.mobile-search input{font-size:16px}
-.nav-inner{flex-wrap:wrap;gap:10px}
-.nav-actions{width:100%;overflow-x:auto;padding-bottom:2px}
-.nav-actions .btn,.nav-actions a.btn{white-space:nowrap;min-height:44px}
+.search-wrap{display:none}.mobile-search{display:block;padding:0 12px 10px}
+.mobile-search input{font-size:16px;background:#fff;border:1px solid #e2d9c9;border-radius:12px;padding:9px 12px}
+.nav-inner{flex-wrap:nowrap;gap:8px;padding:10px 12px}
+.sanju-logo{gap:6px;flex-shrink:0}
+.logo-mark{font-size:25px}
+.sanju-logo .logo-text{font-size:16.5px}
+.sanju-logo .logo-text small{display:none}
+.nav-actions{margin-left:auto;display:flex;gap:6px;flex-shrink:0}
+.nav-actions .btn,.nav-actions a.btn{white-space:nowrap;min-height:0;padding:7px 11px;font-size:12px;border-radius:12px}
 input,select,textarea{font-size:16px}
 .perks{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr}.two{grid-template-columns:1fr}
 .how-grid,.rev-grid,.contact-grid,.foot-grid{grid-template-columns:1fr}
@@ -206,4 +210,9 @@ body{padding-bottom:66px}
 .hero-thumbs img{width:52px;height:52px}
 .show-card{padding:14px 6px}
 .stats{gap:16px}
+.nav-inner{gap:6px;padding:8px 10px}
+.sanju-logo .logo-text{font-size:15px}
+.logo-mark{font-size:22px}
+.nav-actions{gap:5px}
+.nav-actions .btn,.nav-actions a.btn{font-size:11px;padding:6px 9px}
 }
