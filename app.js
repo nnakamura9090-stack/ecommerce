@@ -94,9 +94,9 @@ function countUp(id, target){ let v = 0; const el = $(id); const t = setInterval
 const CAT_EMOJI = {'Radium':'⚡','Number Plates':'🔢','Name Plates':'🏠','Flex & Vinyl':'🖨️','Thermocol Decor':'🎉'};
 function renderShowcase(){
   const el = $('catShow'); if(!el) return;
-  el.innerHTML = CATS.slice(1).map(c=>{
+  el.innerHTML = CATS.slice(1).map((c,i)=>{
     const n = products.filter(p=>p.cat===c).length;
-    return `<div class="show-card" data-show="${c}"><div class="em">${CAT_EMOJI[c]||'🎨'}</div><b>${c}</b><span>${n} items • tap to view</span></div>`;
+    return `<div class="show-card" data-show="${c}" style="--d:${i*70}ms"><div class="em">${CAT_EMOJI[c]||'🎨'}</div><b>${c}</b><span>${n} items • tap to view</span></div>`;
   }).join('');
   document.querySelectorAll('[data-show]').forEach(card=>card.onclick=()=>{
     state.cat = card.dataset.show; renderCats(); renderGrid();
@@ -108,8 +108,13 @@ function renderShowcase(){
 function startReveal(){
   const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target) } }), {threshold:.12});
   document.querySelectorAll('.reveal').forEach(s=>io.observe(s));
-  const top = $('topBtn');
-  window.addEventListener('scroll', ()=>top.classList.toggle('hidden', window.scrollY < 600));
+  const top = $('topBtn'), bar = $('scrollbar');
+  window.addEventListener('scroll', ()=>{
+    top.classList.toggle('hidden', window.scrollY < 600);
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  }, {passive:true});
   top.onclick = ()=>window.scrollTo({top:0, behavior:'smooth'});
 }
 function waOrder(p){
@@ -197,8 +202,8 @@ function renderGrid(){
   $('resultCount').textContent = `${list.length} item${list.length!==1?'s':''} ${state.cat!=='All'?'in '+state.cat:''}`;
   $('statCount').textContent = products.length;
   $('empty').classList.toggle('hidden', list.length>0);
-  $('grid').innerHTML = list.map(p=>`
-    <article class="card" data-view="${p.id}">
+  $('grid').innerHTML = list.map((p,i)=>`
+    <article class="card" data-view="${p.id}" style="--d:${Math.min(i*45,450)}ms">
       <div class="img-wrap">
         <img src="${p.img}" alt="${p.title}" loading="lazy" onerror="this.src='https://picsum.photos/seed/${p.id}/600/600'" />
         ${p.badge?`<span class="badge ${badgeCls(p.badge)}">${p.badge}</span>`:''}
@@ -255,9 +260,9 @@ function renderCart(){
 }
 
 /* ---------- drawer / modal helpers ---------- */
-function show(id){ $(id).classList.remove('hidden'); if(id!=='toast') $('overlay').classList.remove('hidden'); if(id==='cartDrawer') $('cartDrawer').classList.add('open') }
-function hideAll(){ ['cartDrawer','productModal','checkoutModal','adminModal'].forEach(i=>$(i).classList.add('hidden')); $('overlay').classList.add('hidden'); $('cartDrawer').classList.remove('open') }
-function openDrawer(){ renderCart(); $('cartDrawer').classList.remove('hidden'); $('overlay').classList.remove('hidden'); $('cartDrawer').classList.add('open') }
+function show(id){ $(id).classList.remove('hidden'); if(id!=='toast') $('overlay').classList.remove('hidden'); if(id==='cartDrawer') $('cartDrawer').classList.add('open'); document.body.style.overflow='hidden' }
+function hideAll(){ ['cartDrawer','productModal','checkoutModal','adminModal'].forEach(i=>$(i).classList.add('hidden')); $('overlay').classList.add('hidden'); $('cartDrawer').classList.remove('open'); document.body.style.overflow='' }
+function openDrawer(){ renderCart(); $('cartDrawer').classList.remove('hidden'); $('overlay').classList.remove('hidden'); $('cartDrawer').classList.add('open'); document.body.style.overflow='hidden' }
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=hideAll);
 $('overlay').onclick=hideAll; $('cartBtn').onclick=openDrawer;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hideAll()});
