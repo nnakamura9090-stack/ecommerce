@@ -213,8 +213,11 @@ input,select,textarea{font-size:16px}
 .hero-main img{will-change:transform,opacity}
 /* bottom action bar */
 body{padding-bottom:66px}
-.mobile-bar{position:fixed;left:10px;right:10px;bottom:10px;z-index:45;display:flex;gap:8px;background:rgba(20,19,18,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:8px;box-shadow:0 12px 32px rgba(0,0,0,.35)}
-.mobile-bar a,.mobile-bar button{flex:1;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:11px 4px;font-size:13.5px;font-weight:700;text-align:center;cursor:pointer}
+.mobile-bar{position:fixed;left:10px;right:10px;bottom:10px;z-index:45;display:flex;gap:8px;padding:8px;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.07) 40%,rgba(20,19,18,.55));backdrop-filter:blur(26px) saturate(190%);-webkit-backdrop-filter:blur(26px) saturate(190%);border:1px solid rgba(255,255,255,.45);box-shadow:0 12px 32px rgba(0,0,0,.35),inset 0 1px 1px rgba(255,255,255,.55),inset 0 -1px 1px rgba(255,255,255,.12)}
+.mobile-bar::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);pointer-events:none;animation:liquidSheen 5s ease-in-out infinite}
+@keyframes liquidSheen{0%,100%{opacity:0;transform:translateX(-12%)}50%{opacity:1;transform:translateX(12%)}}
+.mobile-bar a,.mobile-bar button{flex:1;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;border-radius:14px;padding:11px 4px;font-size:13.5px;font-weight:700;text-align:center;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.4);transition:.2s}
+.mobile-bar a:active,.mobile-bar button:active{transform:scale(.94)}
 .mobile-bar a:first-child{background:#1a7f4b;border-color:#1a7f4b}
 }
 @media(max-width:600px){
