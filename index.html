@@ -21,17 +21,17 @@
 <header class="nav">
   <div class="nav-inner">
     <a class="logo sanju-logo" href="#"><span class="logo-mark">🎨</span><span class="logo-text">Sanju Art <b>Danta</b><small>A Complete Art Gallery</small></span></a>
-    <div class="search-wrap">
-      <span class="search-icon">⌕</span>
-      <input id="searchInput" type="search" placeholder="Search radium, number plate, flex, wedding decor..." autocomplete="off" />
-    </div>
     <nav class="nav-actions">
-      <a class="call-icon" href="tel:+919887377685" title="Call: +91 98873 77685">📞</a>
-      <button id="cartBtn" class="btn dark">Cart (<span id="cartCount">0</span>)</button>
+      <button id="searchBtn" class="search-icon-btn" title="Search">⌕</button>
     </nav>
   </div>
-  <div class="mobile-search">
-    <input id="searchInputMobile" type="search" placeholder="Search radium, number plate, flex..." />
+  <div id="searchPanel" class="search-panel hidden">
+    <div class="search-box">
+      <span class="search-icon">⌕</span>
+      <input id="searchPanelInput" type="search" placeholder="Search radium, number plate, flex, wedding decor..." autocomplete="off" />
+      <button id="searchClose" class="icon-btn">✕</button>
+    </div>
+    <div class="search-tags" id="searchTags"></div>
   </div>
 </header>
 
@@ -172,6 +172,7 @@
 </footer>
 
 <button id="topBtn" class="top-btn hidden" title="Back to top">↑</button>
+<button id="floatCart" class="float-cart" title="Open cart">🛒 <span id="fCartCount">0</span></button>
 
 <nav class="mobile-bar only-mobile">
   <a href="tel:+919887377685" style="text-decoration:none">📞 Call</a>

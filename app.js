@@ -239,8 +239,9 @@ function cartTotals(){
 }
 function renderCart(){
   const t = cartTotals();
-  $('cartCount').textContent = t.n;
+  if($('cartCount')) $('cartCount').textContent = t.n;
   if($('mCartCount')) $('mCartCount').textContent = t.n;
+  if($('fCartCount')) $('fCartCount').textContent = t.n;
   $('subtotal').textContent = money(t.sub);
   $('shipping').textContent = t.ship===0?(t.sub>0?'Free':money(0)):money(t.ship);
   $('grandTotal').textContent = money(t.total);
@@ -261,10 +262,10 @@ function renderCart(){
 
 /* ---------- drawer / modal helpers ---------- */
 function show(id){ $(id).classList.remove('hidden'); if(id!=='toast') $('overlay').classList.remove('hidden'); if(id==='cartDrawer') $('cartDrawer').classList.add('open'); document.body.style.overflow='hidden' }
-function hideAll(){ ['cartDrawer','productModal','checkoutModal','adminModal'].forEach(i=>$(i).classList.add('hidden')); $('overlay').classList.add('hidden'); $('cartDrawer').classList.remove('open'); document.body.style.overflow='' }
+function hideAll(){ ['cartDrawer','productModal','checkoutModal','adminModal'].forEach(i=>$(i).classList.add('hidden')); $('overlay').classList.add('hidden'); $('cartDrawer').classList.remove('open'); document.body.style.overflow=''; if($('searchPanel')){ $('searchPanel').classList.add('hidden'); if($('searchBtn')) $('searchBtn').classList.remove('active') } }
 function openDrawer(){ renderCart(); $('cartDrawer').classList.remove('hidden'); $('overlay').classList.remove('hidden'); $('cartDrawer').classList.add('open'); document.body.style.overflow='hidden' }
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=hideAll);
-$('overlay').onclick=hideAll; $('cartBtn').onclick=openDrawer;
+$('overlay').onclick=hideAll; if($('floatCart')) $('floatCart').onclick=openDrawer;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hideAll()});
 let toastT; function toast(m){ const t=$('toast'); t.textContent=m; t.classList.remove('hidden'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.add('hidden'),2200) }
 
@@ -367,13 +368,30 @@ $('resetBtn').onclick=()=>{ products=[...DEFAULT_PRODUCTS]; save('sanju_products
 
 /* ---------- filters events ---------- */
 function bindSearch(el){ $(el).addEventListener('input',e=>{ state.q=e.target.value; renderGrid() }) }
-bindSearch('searchInput'); bindSearch('searchInputMobile');
+bindSearch('searchPanelInput');
+// expandable search in nav
+function toggleSearch(force){
+  const p = $('searchPanel');
+  const show = force !== undefined ? force : p.classList.contains('hidden');
+  p.classList.toggle('hidden', !show);
+  $('searchBtn').classList.toggle('active', show);
+  if(show) setTimeout(()=>$('searchPanelInput').focus(), 80);
+}
+$('searchBtn').onclick = e=>{ e.stopPropagation(); toggleSearch() };
+$('searchClose').onclick = ()=>toggleSearch(false);
+const SEARCH_TAGS = ['radium stickers','number plate','name plate','flex banner','wedding decor','birthday'];
+$('searchTags').innerHTML = SEARCH_TAGS.map(t=>`<button data-tag="${t}">${t}</button>`).join('');
+document.querySelectorAll('[data-tag]').forEach(b=>b.onclick=()=>{
+  $('searchPanelInput').value = b.dataset.tag; state.q = b.dataset.tag;
+  renderGrid(); toggleSearch(false);
+  document.getElementById('shop').scrollIntoView({behavior:'smooth'});
+});
 $('priceRange').oninput=e=>{ state.max=+e.target.value; $('priceLabel').textContent='₹'+Number(e.target.value).toLocaleString('en-IN'); renderGrid() };
 $('sortSelect').onchange=e=>{ state.sort=e.target.value; renderGrid() };
 $('inStockOnly').onchange=e=>{ state.stock=e.target.checked; renderGrid() };
 $('onSaleOnly').onchange=e=>{ state.sale=e.target.checked; renderGrid() };
 $('clearFilters').onclick=()=>{ state={q:'',cat:'All',max:5000,sort:'featured',stock:false,sale:false};
-  $('searchInput').value='';$('searchInputMobile').value='';$('priceRange').value=5000;$('priceLabel').textContent='₹5000';
+  $('searchPanelInput').value='';$('priceRange').value=5000;$('priceLabel').textContent='₹5000';
   $('sortSelect').value='featured';$('inStockOnly').checked=false;$('onSaleOnly').checked=false; renderCats(); renderGrid() };
 
 /* init */
