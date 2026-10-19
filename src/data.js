@@ -53,3 +53,16 @@ export function badgeStyle(b) {
   if (c === 'new') return 'bg-[#1a7f4b]';
   return 'bg-black/45 backdrop-blur-md border border-white/40';
 }
+
+export function buyNowWhatsApp(p) {
+  const msg = encodeURIComponent(
+    `🛒 *Buy Now Request*\n\n` +
+    `Mujhe ye product chahiye:\n` +
+    `📦 *${p.title}*\n` +
+    `💰 Price: ₹${Number(p.price).toLocaleString('en-IN')}\n` +
+    `🏷️ Category: ${p.cat}\n` +
+    `🖼️ Image: ${p.img}\n\n` +
+    `Please confirm availability and delivery details.`
+  );
+  window.open(`https://wa.me/919887377685?text=${msg}`, '_blank');
+}

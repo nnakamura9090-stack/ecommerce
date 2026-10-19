@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { DEFAULT_PRODUCTS, WA_LINK } from './data.js';
+import { DEFAULT_PRODUCTS, WA_LINK, buyNowWhatsApp } from './data.js';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import Strip from './components/Strip.jsx';
@@ -274,6 +274,7 @@ export default function App() {
         onView={setViewId}
         notify={notify}
         onSelectCat={selectCat}
+        onBuyNow={buyNowWhatsApp}
       />
 
       <Strip onAction={mqAction} notify={notify} />

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CATS, money, badgeCls } from '../data.js';
+import { CATS, money, badgeCls, buyNowWhatsApp } from '../data.js';
 
 function badgeTone(b) {
   const c = badgeCls(b);
@@ -199,12 +199,22 @@ export default function Shop({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    buyNowWhatsApp(p);
+                  }}
+                  disabled={p.stock === 0}
+                  className="border-0 bg-[#e63946] text-white rounded-[10px] p-2.5 max-sm:px-1.5 max-sm:text-[13px] cursor-pointer font-semibold mt-2 transition-colors hover:brightness-110 disabled:bg-[#ccc] disabled:cursor-not-allowed active:scale-95 shadow-[0_4px_14px_rgba(230,57,70,.4)]"
+                >
+                  {p.stock === 0 ? 'Sold out' : '🛒 Buy Now'}
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
                     onAdd(p.id, 1);
                   }}
                   disabled={p.stock === 0}
                   className="border-0 bg-ink text-white rounded-[10px] p-2.5 max-sm:px-1.5 max-sm:text-[13px] cursor-pointer font-semibold mt-2 transition-colors hover:bg-accent disabled:bg-[#ccc] disabled:cursor-not-allowed active:scale-95"
                 >
-                  {p.stock === 0 ? 'Sold out' : 'Add to cart'}
+                  Add to cart
                 </button>
               </div>
             </article>

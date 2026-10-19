@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { money } from '../data.js';
+import { money, buyNowWhatsApp } from '../data.js';
 
 function ModalShell({ open, onClose, wide, children }) {
   return (
@@ -175,6 +175,13 @@ export function ProductModal({ product: p, wished, onClose, onAdd, onWish, onWa 
                 : '✕ Out of stock'}
             </p>
             <div className="flex gap-2 mt-2.5 flex-wrap">
+              <button
+                onClick={() => buyNowWhatsApp(p)}
+                disabled={p.stock === 0}
+                className="border-0 bg-[#e63946] text-white rounded-full px-[18px] py-2.5 font-semibold text-sm cursor-pointer transition-all disabled:opacity-50 hover:brightness-110 shadow-[0_4px_14px_rgba(230,57,70,.4)]"
+              >
+                🛒 Buy Now
+              </button>
               <button
                 onClick={() => onAdd(p.id, 1)}
                 disabled={p.stock === 0}

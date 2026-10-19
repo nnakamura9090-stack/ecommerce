@@ -19,7 +19,7 @@ function useCountUp(target, duration = 1200) {
   return val;
 }
 
-export default function Hero({ products, onAdd, onView, notify, onSelectCat }) {
+export default function Hero({ products, onAdd, onView, notify, onSelectCat, onBuyNow }) {
   const featured = useMemo(
     () => [...products].sort((a, b) => b.rating - a.rating).slice(0, 5),
     [products]
@@ -268,9 +268,16 @@ export default function Hero({ products, onAdd, onView, notify, onSelectCat }) {
               <h3 className="my-0.5 text-lg font-display">{p.title}</h3>
               <p className="text-[12.5px] text-[#666]">by {p.artist}</p>
             </div>
-            <div className="grid gap-1.5 md:text-right w-full md:w-auto">
-              <b className="text-lg">{money(p.price || 0)}</b>
-              <div className="flex gap-1.5">
+            <div className="flex gap-1.5 flex-wrap">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onBuyNow(p);
+                  }}
+                  className="flex-1 md:flex-none border-0 bg-[#e63946] text-white rounded-full px-[13px] py-[7px] min-h-[42px] md:min-h-0 cursor-pointer text-[12.5px] font-bold shadow-[0_4px_14px_rgba(230,57,70,.4)] transition-all hover:brightness-110"
+                >
+                  🛒 Buy Now
+                </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -290,7 +297,6 @@ export default function Hero({ products, onAdd, onView, notify, onSelectCat }) {
                   Add +
                 </button>
               </div>
-            </div>
           </div>
           <div className="absolute top-0 left-0 right-0 h-[5px] bg-white/20 backdrop-blur-sm z-[3]">
             <div
